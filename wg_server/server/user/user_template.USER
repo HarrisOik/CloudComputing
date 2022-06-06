@@ -1,0 +1,1 @@
+wg set swarmlab0 peer client_public_key allowed-ips 10.1.2.68

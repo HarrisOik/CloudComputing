@@ -1,0 +1,70 @@
+---
+- hosts: cloud
+  remote_user: "{{ user }}"
+
+  tasks:
+
+    - name: apt upgrade
+      become: true
+      apt:
+        update_cache: true
+        upgrade: dist
+        autoclean: yes
+        autoremove: true
+
+    - name: apt install packages
+      become: true
+      apt:
+        update_cache: true
+        install_recommends: true
+        autoremove: true
+        name: "{{ packages }}"
+      vars:
+        packages:
+         - build-essential
+         - git
+         - python-dev
+         - python-pip
+         - python-virtualenv
+         - python-numpy
+         - python-matplotlib
+         - flex
+         - bison
+         - traceroute
+         - curl
+         - lynx
+         - links2
+         - links
+         - w3m
+         - wireguard
+         - make
+
+# ----------------------------------------- >>> 
+    - name: Creates directory .ssh
+      become: true
+      file:
+        path: /home/{{ user }}/.ssh
+        state: directory
+        owner: "{{ user }}"
+        group: "{{ user }}"
+        mode: 0700
+        recurse: yes
+
+    - name: copy auth file authorized_keys
+      become: true
+      copy:
+        src: ./files/authorized_keys
+        dest: /home/{{ user }}/.ssh/authorized_keys
+        owner: "{{ user }}"
+        group: "{{ user }}"
+        mode: 0644
+# ----------------------------------------- <<<
+    - name: clone service repo
+          become: true
+          git:
+            repo: https://git.swarmlab.io:3000/swarmlab/microservice-wordpress.git
+            dest: /home/{{ user }}/
+            clone: yes
+            update: yes
+# ---------------------------------------- >>> 
+    

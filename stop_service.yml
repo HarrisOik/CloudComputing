@@ -1,0 +1,17 @@
+---
+- hosts: cloud
+  remote_user: "{{ user }}"
+
+  tasks:
+
+    - name: stop service
+      become: yes 
+      make:
+        chdir: /home/{{ user }}/microservice-wordpress
+        target: stop
+
+    - name: clean service
+      become: yes 
+      make:
+        chdir: /home/{{ user }}/microservice-wordpress
+        target: clean
