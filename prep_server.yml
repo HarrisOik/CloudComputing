@@ -60,11 +60,11 @@
         mode: 0644
 # ----------------------------------------- <<<
     - name: clone service repo
-          become: true
-          git:
-            repo: https://git.swarmlab.io:3000/swarmlab/microservice-wordpress.git
-            dest: /home/{{ user }}/
-            clone: yes
-            update: yes
+      become: true
+      git:
+        repo: https://git.swarmlab.io:3000/swarmlab/microservice-wordpress.git
+        dest: /home/{{ user }}/microservice-wordpress
+        clone: yes
+        update: yes
 # ---------------------------------------- >>> 
     
